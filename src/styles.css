@@ -1,0 +1,15 @@
+/* You can add global styles to this file, and also import other style files */
+:root {
+  --bg: #fffbe6;
+  --sidebar-bg: #f26435;
+  --button-bg: #ffe27a;
+  --button-active-bg: #ffd23f;
+  --ink: #1a1a1a;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+}

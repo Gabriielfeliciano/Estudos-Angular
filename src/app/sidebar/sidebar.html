@@ -1,0 +1,17 @@
+<aside class="sidebar">
+  <div class="profile">
+    <img class="avatar" [src]="profile.photo" alt="Foto de perfil" />
+    <span class="name">{{ profile.name }}</span>
+  </div>
+
+  <nav class="menu" aria-label="Níveis">
+    @for (level of levels; track level.path; let i = $index) {
+      <a class="menu-item" [routerLink]="level.path" routerLinkActive="active">
+        <span>{{ level.label }}</span>
+        <span class="badge">{{ '0' + (i + 1) }}</span>
+      </a>
+    }
+  </nav>
+
+  <div class="footer"></div>
+</aside>

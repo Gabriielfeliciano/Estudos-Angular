@@ -1,0 +1,73 @@
+:host {
+  display: flex;
+}
+
+.sidebar {
+  position: sticky;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 204px;
+  flex-shrink: 0;
+  padding: 16px;
+  box-sizing: border-box;
+  border-radius: 0px 12px 12px 0px;
+  background: var(--sidebar-bg);
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--button-bg);
+}
+
+.name {
+  color: #fff;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 8px 6px 10px;
+  border-radius: 6px;
+  background: var(--button-bg);
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.menu-item:hover,
+.menu-item.active {
+  background: var(--button-active-bg);
+}
+
+.badge {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #fff;
+  font-size: 0.65rem;
+}
+
+.footer {
+  flex: 1;
+}
