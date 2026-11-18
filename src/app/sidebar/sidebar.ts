@@ -9,7 +9,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 })
 export class Sidebar {
   protected readonly profile = {
-    name: 'Seu Nome',
+    name: 'Gabriel',
     photo: 'profile-placeholder.svg',
   };
 

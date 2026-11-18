@@ -1,0 +1,38 @@
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.tab {
+  padding: 6px 12px;
+  border: 0;
+  border-radius: 6px 6px 0 0;
+  background: #30363d;
+  color: #c9d1d9;
+  font: inherit;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.tab.active {
+  background: #0d1117;
+  color: #fff;
+}
+
+.code {
+  margin: 0;
+  overflow-x: auto;
+  border-radius: 0 6px 6px 6px;
+  background: #0d1117;
+}
+
+/* As cores vêm do tema do highlight.js importado em src/styles.css. */
+.code code {
+  display: block;
+  padding: 14px 16px;
+  background: transparent;
+  font-family: Consolas, 'Cascadia Code', 'Courier New', monospace;
+  font-size: 0.82rem;
+  line-height: 1.5;
+}

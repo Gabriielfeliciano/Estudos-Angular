@@ -1,4 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
+/* Tema de cores do código (highlight.js). Precisa ser global: o HTML colorido entra via innerHTML. */
+@import 'highlight.js/styles/github-dark.css';
+
 :root {
   --bg: #fffbe6;
   --sidebar-bg: #f26435;

@@ -1,0 +1,15 @@
+<div class="tabs" role="tablist">
+  @for (file of files(); track file.label; let i = $index) {
+    <button
+      type="button"
+      role="tab"
+      class="tab"
+      [class.active]="selected() === i"
+      [attr.aria-selected]="selected() === i"
+      (click)="select(i)"
+    >
+      {{ file.label }}
+    </button>
+  }
+</div>
+<pre class="code"><code class="hljs" [innerHTML]="highlighted()"></code></pre>

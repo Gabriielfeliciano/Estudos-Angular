@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { Junior } from './pages/junior';
+import { Junior } from './pages/junior/junior';
 import { Mid } from './pages/mid';
 import { Senior } from './pages/senior';
 
