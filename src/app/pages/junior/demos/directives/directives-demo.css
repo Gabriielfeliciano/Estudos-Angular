@@ -1,0 +1,102 @@
+.today {
+  margin-top: 0;
+  opacity: 0.7;
+}
+
+.progress {
+  height: 10px;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px solid var(--ink);
+  overflow: hidden;
+}
+
+.bar {
+  height: 100%;
+  background: var(--sidebar-bg);
+  transition: width 0.3s;
+}
+
+ul {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+}
+
+/* Classes aplicadas pelo [ngClass] */
+li.done {
+  opacity: 0.5;
+}
+
+li.done strong {
+  text-decoration: line-through;
+}
+
+li.free {
+  border-style: dashed;
+}
+
+li.empty {
+  justify-content: center;
+  cursor: default;
+}
+
+.index {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--button-bg);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.info {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+small {
+  opacity: 0.7;
+}
+
+.badge {
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.badge.junior {
+  background: #d1fadf;
+}
+
+.badge.mid {
+  background: #fef0c7;
+}
+
+.badge.senior {
+  background: #fee4e2;
+}
+
+.price {
+  min-width: 70px;
+  text-align: right;
+  font-weight: 600;
+}

@@ -1,0 +1,51 @@
+<!-- Pipe date: formata a data -->
+<p class="today">Hoje: {{ today | date: 'dd/MM/yyyy' }}</p>
+
+<!-- Barra de progresso: [ngStyle] aplica estilos calculados na hora -->
+<div class="progress">
+  <div class="bar" [ngStyle]="{ width: (progress * 100) + '%' }"></div>
+</div>
+<!-- Pipe percent: 0.25 vira "25%" -->
+<p>Progresso: {{ progress | percent }}</p>
+
+<label>
+  <input type="checkbox" [checked]="hideDone" (change)="hideDone = !hideDone" />
+  Esconder concluídos
+</label>
+
+<ul>
+  <!-- @for: repete o bloco para cada item. track identifica cada item (obrigatório) -->
+  @for (course of visibleCourses; track course.title; let i = $index) {
+    <!-- [ngClass]: aplica várias classes conforme condições -->
+    <li [ngClass]="{ done: course.done, free: course.price === 0 }" (click)="toggle(course)">
+      <span class="index">{{ i + 1 }}</span>
+
+      <div class="info">
+        <!-- Pipe titlecase: primeira letra de cada palavra em maiúscula -->
+        <strong>{{ course.title | titlecase }}</strong>
+        <small>
+          <!-- Pipe customizado (duration.pipe.ts) e pipe date -->
+          {{ course.minutes | duration }} · início {{ course.startedAt | date: 'dd/MM' }}
+        </small>
+      </div>
+
+      <!-- @switch: escolhe um bloco conforme o valor -->
+      @switch (course.level) {
+        @case ('junior') { <span class="badge junior">Junior</span> }
+        @case ('mid') { <span class="badge mid">Mid</span> }
+        @default { <span class="badge senior">Senior</span> }
+      }
+
+      <!-- @if / @else: mostra um bloco ou outro -->
+      @if (course.price === 0) {
+        <span class="price">Grátis</span>
+      } @else {
+        <!-- Pipe currency: formata como moeda -->
+        <span class="price">{{ course.price | currency: 'BRL' }}</span>
+      }
+    </li>
+  } @empty {
+    <!-- @empty: aparece quando a lista está vazia -->
+    <li class="empty">Tudo concluído! 🎉</li>
+  }
+</ul>

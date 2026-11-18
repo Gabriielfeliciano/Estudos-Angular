@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CodeFile } from '../../shared/code-viewer/code-viewer';
 import { TopicCard } from '../../shared/topic-card/topic-card';
 import { BindingDemo } from './demos/binding/binding-demo';
+import { DirectivesDemo } from './demos/directives/directives-demo';
 
 // Os arquivos dos exemplos (pasta demos/) são publicados em /code/junior
 // (ver "assets" no angular.json) e o code-viewer busca o texto ao abrir cada aba.
@@ -9,7 +10,7 @@ const demo = (file: string) => `/code/junior/${file}`;
 
 @Component({
   selector: 'app-junior',
-  imports: [TopicCard, BindingDemo],
+  imports: [TopicCard, BindingDemo, DirectivesDemo],
   templateUrl: './junior.html',
   styleUrl: './junior.css',
 })
@@ -100,5 +101,30 @@ Teste no exemplo: digite um nome, curta, destaque o card e zere. Depois veja nas
     { label: 'binding-demo.html', path: demo('binding/binding-demo.html') },
     { label: 'binding-demo.css', path: demo('binding/binding-demo.css') },
     { label: 'binding-demo.ts', path: demo('binding/binding-demo.ts') },
+  ];
+
+  // 03 - Diretivas e pipes
+  protected readonly directivesDescription = `Diretivas mudam o que aparece no template ou como um elemento se comporta. Pipes formatam um valor só na hora de exibir, sem alterar o dado original.
+
+Controle de fluxo (já vem no Angular, sem import):
+• @if / @else: mostra um bloco ou outro conforme uma condição.
+• @for: repete um bloco para cada item de uma lista. O track é obrigatório e diz ao Angular como identificar cada item. Dentro dele existem variáveis como $index, $first e $last. O bloco @empty aparece quando a lista está vazia.
+• @switch / @case / @default: escolhe um bloco conforme um valor.
+
+Diretivas de atributo (importadas de @angular/common):
+• [ngClass]: aplica várias classes CSS a partir de um objeto { classe: condição }.
+• [ngStyle]: aplica estilos calculados, como a largura da barra de progresso.
+
+Pipes, usados com | no template, como {{ valor | pipe: argumento }}:
+• Prontos: uppercase, lowercase, titlecase, date, currency, number, percent, entre outros. Precisam estar no imports do componente.
+• Customizados: uma classe com @Pipe e um método transform(). O exemplo cria o pipe duration, que transforma minutos em "1h 30min".
+
+Teste no exemplo: clique em um curso para marcar como concluído e use "Esconder concluídos". Marque todos e esconda para ver o @empty.`;
+
+  protected readonly directives: CodeFile[] = [
+    { label: 'directives-demo.html', path: demo('directives/directives-demo.html') },
+    { label: 'directives-demo.css', path: demo('directives/directives-demo.css') },
+    { label: 'directives-demo.ts', path: demo('directives/directives-demo.ts') },
+    { label: 'duration.pipe.ts', path: demo('directives/duration.pipe.ts') },
   ];
 }
