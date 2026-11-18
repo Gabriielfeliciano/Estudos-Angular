@@ -7,5 +7,6 @@
 
 .content {
   flex: 1;
+  min-width: 0; /* deixa o conteúdo encolher; sem isso, linhas longas de código estouram a largura da página */
   padding: 16px;
 }

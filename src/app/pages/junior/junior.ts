@@ -1,10 +1,15 @@
 import { Component } from '@angular/core';
 import { CodeFile } from '../../shared/code-viewer/code-viewer';
 import { TopicCard } from '../../shared/topic-card/topic-card';
+import { BindingDemo } from './demos/binding/binding-demo';
+
+// Os arquivos dos exemplos (pasta demos/) são publicados em /code/junior
+// (ver "assets" no angular.json) e o code-viewer busca o texto ao abrir cada aba.
+const demo = (file: string) => `/code/junior/${file}`;
 
 @Component({
   selector: 'app-junior',
-  imports: [TopicCard],
+  imports: [TopicCard, BindingDemo],
   templateUrl: './junior.html',
   styleUrl: './junior.css',
 })
@@ -76,5 +81,24 @@ ng serve        # ou: npm start
         ├── app.config.ts   # providers globais (router, http...)
         └── app.routes.ts   # rotas da aplicação`,
     },
+  ];
+
+  // 02 - Componentes, templates e data binding
+  protected readonly bindingDescription = `Componente é a peça básica de uma aplicação Angular. Cada tela, ou pedaço de tela, é um componente formado por três partes: a classe TypeScript (dados e lógica), o template HTML (o que aparece) e o CSS (o visual, que vale só para aquele componente).
+
+O decorator @Component liga as três partes e define o selector, a tag usada para colocar o componente na tela. O exemplo abaixo é o componente BindingDemo, usado na página com <app-binding-demo />.
+
+Data binding é a ligação entre a classe e o template. São quatro formas:
+• Interpolação {{ valor }}: mostra no HTML o valor de uma propriedade da classe.
+• Property binding [propriedade]="valor": passa um valor da classe para uma propriedade do elemento, como [disabled] ou [class.highlighted].
+• Event binding (evento)="metodo()": chama um método da classe quando algo acontece, como um clique.
+• Two-way binding [(ngModel)]="propriedade": junta os dois sentidos. Digitar no input muda a propriedade, e mudar a propriedade muda o input. Precisa do FormsModule.
+
+Teste no exemplo: digite um nome, curta, destaque o card e zere. Depois veja nas abas de código onde cada binding aparece.`;
+
+  protected readonly binding: CodeFile[] = [
+    { label: 'binding-demo.html', path: demo('binding/binding-demo.html') },
+    { label: 'binding-demo.css', path: demo('binding/binding-demo.css') },
+    { label: 'binding-demo.ts', path: demo('binding/binding-demo.ts') },
   ];
 }

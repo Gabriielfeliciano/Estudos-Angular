@@ -1,0 +1,21 @@
+<!-- [class.highlighted]: property binding que liga/desliga uma classe CSS -->
+<div class="card" [class.highlighted]="highlighted">
+  <!-- Interpolação {{ }}: mostra o valor de uma propriedade da classe -->
+  <h4>{{ name || 'Sem nome' }}</h4>
+  <p>Estudando {{ course }} · {{ likes }} curtida(s)</p>
+
+  <!-- Event binding (evento): chama um método quando o evento acontece -->
+  <button type="button" (click)="like()">Curtir</button>
+  <button type="button" (click)="toggleHighlight()">
+    {{ highlighted ? 'Remover destaque' : 'Destacar' }}
+  </button>
+
+  <!-- Property binding [propriedade]: passa um valor para uma propriedade do elemento -->
+  <button type="button" [disabled]="likes === 0 && !name" (click)="reset()">Zerar</button>
+</div>
+
+<!-- Two-way binding [(ngModel)]: o input altera a propriedade e a propriedade altera o input -->
+<label>
+  Nome:
+  <input [(ngModel)]="name" placeholder="Digite um nome" />
+</label>
