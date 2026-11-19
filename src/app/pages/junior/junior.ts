@@ -3,6 +3,7 @@ import { CodeFile } from '../../shared/code-viewer/code-viewer';
 import { TopicCard } from '../../shared/topic-card/topic-card';
 import { BindingDemo } from './demos/binding/binding-demo';
 import { DirectivesDemo } from './demos/directives/directives-demo';
+import { ServicesDemo } from './demos/services/services-demo';
 
 // Os arquivos dos exemplos (pasta demos/) são publicados em /code/junior
 // (ver "assets" no angular.json) e o code-viewer busca o texto ao abrir cada aba.
@@ -10,7 +11,7 @@ const demo = (file: string) => `/code/junior/${file}`;
 
 @Component({
   selector: 'app-junior',
-  imports: [TopicCard, BindingDemo, DirectivesDemo],
+  imports: [TopicCard, BindingDemo, DirectivesDemo, ServicesDemo],
   templateUrl: './junior.html',
   styleUrl: './junior.css',
 })
@@ -126,5 +127,31 @@ Teste no exemplo: clique em um curso para marcar como concluído e use "Esconder
     { label: 'directives-demo.css', path: demo('directives/directives-demo.css') },
     { label: 'directives-demo.ts', path: demo('directives/directives-demo.ts') },
     { label: 'duration.pipe.ts', path: demo('directives/duration.pipe.ts') },
+  ];
+
+  // 04 - Serviços e injeção de dependência
+  protected readonly servicesDescription = `Serviço é uma classe para lógica e dados que não pertencem a um componente só: buscar dados de uma API, guardar um estado compartilhado, regras de negócio. Componentes cuidam da tela; serviços cuidam do resto.
+
+Injeção de dependência (DI) é o jeito como o componente recebe o serviço. Ele não cria o serviço com new; ele pede, e o Angular entrega:
+• @Injectable({ providedIn: 'root' }) registra o serviço no app inteiro. O Angular cria uma única instância (singleton) na primeira vez que alguém pede.
+• inject(NotesService) dentro do componente pede essa instância. Também dá para pedir pelo construtor: constructor(public notesService: NotesService). Os dois funcionam igual; o inject() é o mais usado hoje.
+
+Como todos recebem a mesma instância, o serviço vira um ponto de estado compartilhado. No exemplo, três componentes usam o mesmo NotesService:
+• app-note-form só adiciona anotações.
+• app-note-list só lista e remove.
+• services-demo (o pai) só mostra o total.
+Nenhum deles fala direto com o outro, e mesmo assim tudo fica sincronizado.
+
+Os componentes filhos também mostram outra forma de escrever componente: template e styles inline, dentro do próprio .ts.
+
+Teste no exemplo: adicione e remova anotações e veja a lista e o total mudarem juntos.`;
+
+  protected readonly services: CodeFile[] = [
+    { label: 'notes.service.ts', path: demo('services/notes.service.ts') },
+    { label: 'services-demo.html', path: demo('services/services-demo.html') },
+    { label: 'services-demo.css', path: demo('services/services-demo.css') },
+    { label: 'services-demo.ts', path: demo('services/services-demo.ts') },
+    { label: 'note-form.ts', path: demo('services/note-form.ts') },
+    { label: 'note-list.ts', path: demo('services/note-list.ts') },
   ];
 }

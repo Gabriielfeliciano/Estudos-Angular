@@ -1,0 +1,16 @@
+<!-- Três componentes diferentes usando a MESMA instância do NotesService -->
+<p class="total">
+  Total de anotações (lido pelo services-demo): <strong>{{ notesService.count }}</strong>
+</p>
+
+<div class="columns">
+  <section>
+    <h4>app-note-form</h4>
+    <app-note-form />
+  </section>
+
+  <section>
+    <h4>app-note-list</h4>
+    <app-note-list />
+  </section>
+</div>
