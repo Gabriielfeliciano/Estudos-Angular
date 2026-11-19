@@ -1,0 +1,37 @@
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+a,
+button {
+  padding: 6px 12px;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  background: var(--button-bg);
+  color: var(--ink);
+  font: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Classe aplicada pelo routerLinkActive */
+a.active {
+  border-color: var(--ink);
+  background: var(--button-active-bg);
+  font-weight: 700;
+}
+
+.outlet {
+  margin-top: 12px;
+  padding: 12px;
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.hint {
+  margin: 0;
+  opacity: 0.6;
+}

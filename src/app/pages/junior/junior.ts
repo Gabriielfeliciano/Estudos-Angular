@@ -3,6 +3,7 @@ import { CodeFile } from '../../shared/code-viewer/code-viewer';
 import { TopicCard } from '../../shared/topic-card/topic-card';
 import { BindingDemo } from './demos/binding/binding-demo';
 import { DirectivesDemo } from './demos/directives/directives-demo';
+import { RoutingDemo } from './demos/routing/routing-demo';
 import { ServicesDemo } from './demos/services/services-demo';
 
 // Os arquivos dos exemplos (pasta demos/) são publicados em /code/junior
@@ -11,7 +12,7 @@ const demo = (file: string) => `/code/junior/${file}`;
 
 @Component({
   selector: 'app-junior',
-  imports: [TopicCard, BindingDemo, DirectivesDemo, ServicesDemo],
+  imports: [TopicCard, BindingDemo, DirectivesDemo, ServicesDemo, RoutingDemo],
   templateUrl: './junior.html',
   styleUrl: './junior.css',
 })
@@ -153,5 +154,51 @@ Teste no exemplo: adicione e remova anotações e veja a lista e o total mudarem
     { label: 'services-demo.ts', path: demo('services/services-demo.ts') },
     { label: 'note-form.ts', path: demo('services/note-form.ts') },
     { label: 'note-list.ts', path: demo('services/note-list.ts') },
+  ];
+
+  // 05 - Roteamento simples
+  protected readonly routingDescription = `O Router troca o componente exibido conforme a URL, sem recarregar a página. É o que faz um app Angular ter várias "páginas".
+
+Rotas: em app.routes.ts, cada rota liga um path a um component. O app.config.ts entrega essas rotas ao Angular com provideRouter(routes). Algumas rotas úteis:
+• redirectTo: redireciona um caminho para outro (o '' vai para 'junior').
+• children: rotas filhas, mostradas dentro do componente da rota pai.
+• '**' (wildcard): pega qualquer URL que não existe.
+
+Onde o componente aparece: no <router-outlet />. O app.html tem um para as páginas (Junior, Mid, Senior), e o exemplo abaixo tem outro para as rotas filhas.
+
+Parâmetros: em 'aula/:id', o :id muda conforme a URL (/junior/aula/1, /junior/aula/2). O componente lê o valor com ActivatedRoute.paramMap, que avisa a cada mudança.
+
+Navegação:
+• No template, com [routerLink]. O routerLinkActive marca o link da rota atual (é assim que a sidebar destaca Junior, Mid ou Senior).
+• No código, com router.navigate(), útil depois de uma ação como salvar ou fazer login.
+
+Teste no exemplo: clique nas aulas, use os botões e repare na URL do navegador. Tente a aula inexistente e depois o "Limpar".`;
+
+  protected readonly routing: CodeFile[] = [
+    {
+      label: 'app.routes.ts',
+      language: 'typescript',
+      code: `import { Routes } from '@angular/router';
+import { routingDemoRoutes } from './pages/junior/demos/routing/routing-demo.routes';
+import { Junior } from './pages/junior/junior';
+import { Mid } from './pages/mid';
+import { Senior } from './pages/senior';
+
+export const routes: Routes = [
+  { path: '', pathMatch: 'full', redirectTo: 'junior' },
+  // children: rotas filhas, mostradas no <router-outlet> do exemplo de roteamento
+  { path: 'junior', component: Junior, children: routingDemoRoutes },
+  { path: 'mid', component: Mid },
+  { path: 'senior', component: Senior },
+  // ** (wildcard): qualquer URL que não bateu acima volta para /junior
+  { path: '**', redirectTo: 'junior' },
+];`,
+    },
+    { label: 'routing-demo.routes.ts', path: demo('routing/routing-demo.routes.ts') },
+    { label: 'routing-demo.html', path: demo('routing/routing-demo.html') },
+    { label: 'routing-demo.css', path: demo('routing/routing-demo.css') },
+    { label: 'routing-demo.ts', path: demo('routing/routing-demo.ts') },
+    { label: 'lesson-detail.ts', path: demo('routing/lesson-detail.ts') },
+    { label: 'lessons.ts', path: demo('routing/lessons.ts') },
   ];
 }

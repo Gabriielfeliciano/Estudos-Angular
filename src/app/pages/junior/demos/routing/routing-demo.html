@@ -1,0 +1,26 @@
+<nav class="links">
+  @for (lesson of lessons; track lesson.id) {
+    <!-- routerLink: navega sem recarregar a página. O array monta a URL: /junior/aula/1 -->
+    <!-- routerLinkActive: adiciona a classe "active" quando a URL bate com o link -->
+    <a [routerLink]="['/junior/aula', lesson.id]" routerLinkActive="active">
+      Aula {{ lesson.id }}
+    </a>
+  }
+
+  <!-- Navegação pelo código, com router.navigate() -->
+  <button type="button" (click)="goToRandom()">Aula aleatória</button>
+  <button type="button" (click)="goToMissing()">Aula inexistente</button>
+
+  <!-- Link simples: volta para /junior (sem rota filha) -->
+  <a routerLink="/junior">Limpar</a>
+</nav>
+
+<div class="outlet">
+  <!-- router-outlet: lugar onde o componente da rota filha aparece -->
+  <!-- #outlet="outlet" guarda o outlet numa variável para usar no template -->
+  <router-outlet #outlet="outlet" />
+
+  @if (!outlet.isActivated) {
+    <p class="hint">Escolha uma aula. Repare na URL do navegador mudando.</p>
+  }
+</div>
