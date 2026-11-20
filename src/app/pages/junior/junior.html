@@ -4,7 +4,7 @@
 <div class="topics">
   <app-topic-card
     [index]="1"
-    title="Instalação básica do Angular"
+    title="Instalação e Angular CLI"
     [description]="installDescription"
     [hasDemo]="false"
     [files]="install"
@@ -62,5 +62,14 @@
     [files]="http"
   >
     <app-http-demo />
+  </app-topic-card>
+
+  <app-topic-card
+    [index]="8"
+    title="TypeScript básico para Angular"
+    [description]="typescriptDescription"
+    [files]="typescript"
+  >
+    <app-ts-demo />
   </app-topic-card>
 </div>

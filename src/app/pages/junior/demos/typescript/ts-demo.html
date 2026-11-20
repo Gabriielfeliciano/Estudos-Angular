@@ -1,0 +1,46 @@
+<!-- 1. Union type + interface + optional -->
+<section>
+  <h4>Union type: Level</h4>
+  <div class="levels">
+    @for (l of levels; track l) {
+      <button type="button" [class.active]="level === l" (click)="level = l">
+        {{ l }} ({{ count(l) }})
+      </button>
+    }
+  </div>
+
+  <ul>
+    @for (s of filtered; track s.name) {
+      <li>
+        <span class="avatar">{{ initials(s.name) }}</span>
+        <div>
+          <strong>{{ s.name }}</strong>
+          <!-- email é opcional (email?): ?? mostra um valor padrão quando não existe -->
+          <small>{{ s.email ?? 'sem e-mail' }} · {{ s.skills.join(', ') }}</small>
+        </div>
+      </li>
+    }
+  </ul>
+</section>
+
+<!-- 2. Generics -->
+<section>
+  <h4>Generics: pickRandom&lt;T&gt;</h4>
+  <button type="button" (click)="pick()">Sortear</button>
+  @if (randomStudent) {
+    <p>
+      pickRandom(STUDENTS) → <code>Student</code>: <strong>{{ randomStudent.name }}</strong><br />
+      pickRandom([10, 20, ...]) → <code>number</code>: <strong>{{ randomNumber }}</strong>
+    </p>
+  }
+</section>
+
+<!-- 3. Classe com private, readonly e get -->
+<section>
+  <h4>Classe: XpCounter</h4>
+  <p>
+    {{ counter.owner }} tem <strong>{{ counter.points }} XP</strong>
+    <span class="stars">{{ counter.stars }}</span>
+  </p>
+  <button type="button" (click)="counter.add(10)">+10 XP</button>
+</section>

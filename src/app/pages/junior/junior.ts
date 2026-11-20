@@ -7,6 +7,7 @@ import { FormsDemo } from './demos/forms/forms-demo';
 import { HttpDemo } from './demos/http/http-demo';
 import { RoutingDemo } from './demos/routing/routing-demo';
 import { ServicesDemo } from './demos/services/services-demo';
+import { TsDemo } from './demos/typescript/ts-demo';
 
 // Os arquivos dos exemplos (pasta demos/) são publicados em /code/junior
 // (ver "assets" no angular.json) e o code-viewer busca o texto ao abrir cada aba.
@@ -14,17 +15,21 @@ const demo = (file: string) => `/code/junior/${file}`;
 
 @Component({
   selector: 'app-junior',
-  imports: [TopicCard, BindingDemo, DirectivesDemo, ServicesDemo, RoutingDemo, FormsDemo, HttpDemo],
+  imports: [TopicCard, BindingDemo, DirectivesDemo, ServicesDemo, RoutingDemo, FormsDemo, HttpDemo, TsDemo],
   templateUrl: './junior.html',
   styleUrl: './junior.css',
 })
 export class Junior {
-  // 01 - Instalação básica do Angular
+  // 01 - Instalação e Angular CLI
   protected readonly installDescription = `Para criar um projeto Angular você precisa de duas coisas: o Node.js (que já vem com o npm) e o Angular CLI.
 
 O Node.js é o ambiente que roda as ferramentas de desenvolvimento. Use a versão LTS. O npm é o gerenciador de pacotes que baixa o Angular e as outras dependências.
 
-O Angular CLI é a ferramenta de linha de comando "ng". Com ela você cria o projeto (ng new), sobe o servidor de desenvolvimento (ng serve), gera componentes e serviços (ng generate) e faz o build (ng build).
+O Angular CLI é a ferramenta de linha de comando "ng". Os comandos principais:
+• ng new: cria o projeto.
+• ng serve: sobe o servidor de desenvolvimento.
+• ng generate (ou ng g): cria componentes, serviços, pipes e outros arquivos já no padrão do Angular.
+• ng build: gera a versão de produção na pasta dist/.
 
 O fluxo é: instalar o Node.js, instalar o CLI globalmente, criar o projeto com ng new, entrar na pasta e rodar ng serve. O app abre em http://localhost:4200 e recarrega sozinho a cada alteração salva.`;
 
@@ -66,6 +71,36 @@ ng new StudyAngular --defaults`,
 ng serve        # ou: npm start
 
 # Abra http://localhost:4200 no navegador`,
+    },
+    {
+      label: '5. Gerar código',
+      language: 'bash',
+      code: `# ng generate (ou ng g) cria os arquivos já no padrão do Angular
+ng generate component pages/perfil   # pasta perfil/ com perfil.ts, .html, .css e .spec.ts
+ng generate service services/notes   # notes.ts (classe @Injectable) + notes.spec.ts
+ng generate pipe pipes/duration      # duration-pipe.ts (classe @Pipe) + duration-pipe.spec.ts
+ng generate interface models/user    # user.ts (interface)
+
+# Forma curta: g = generate, c = component, s = service, p = pipe
+ng g c pages/perfil
+
+# Opções úteis
+ng g c pages/perfil --skip-tests     # não cria o .spec.ts
+ng g c pages/perfil --inline-template --inline-style   # tudo dentro do .ts
+ng g c pages/perfil --dry-run        # só mostra o que seria criado, sem criar`,
+    },
+    {
+      label: '6. Build',
+      language: 'bash',
+      code: `# Gera a versão de produção (otimizada e minificada)
+ng build        # ou: npm run build
+
+# O resultado vai para:
+# dist/StudyAngular/browser/
+#   index.html, main-XXXX.js, styles-XXXX.css...
+#
+# É essa pasta que se publica num servidor ou numa hospedagem (Vercel, Netlify...).
+# O ng serve é só para desenvolvimento; ele não gera a pasta dist.`,
     },
     {
       label: 'Estrutura',
@@ -281,5 +316,39 @@ export const appConfig: ApplicationConfig = {
     { label: 'http-demo.html', path: demo('http/http-demo.html') },
     { label: 'http-demo.css', path: demo('http/http-demo.css') },
     { label: 'http-demo.ts', path: demo('http/http-demo.ts') },
+  ];
+
+  // 08 - TypeScript básico para Angular
+  protected readonly typescriptDescription = `Angular é escrito em TypeScript: JavaScript com tipos. Os tipos não existem quando o app roda; servem para o editor e o build acharem erros antes, e para o autocomplete saber o que cada coisa tem.
+
+Tipos e union types:
+• Tipos básicos: string, number, boolean e arrays como number[]. Muitas vezes o TypeScript deduz o tipo sozinho.
+• Union type: type Level = 'junior' | 'mid' | 'senior' só aceita esses valores. Apareceu no tópico 03.
+
+Interfaces: descrevem o formato de um objeto (Student, User, Course, Note...). O ? marca um campo opcional (email?), e o operador ?? dá um valor padrão quando ele não existe. Apareceu nos tópicos 03 a 07.
+
+Funções:
+• Parâmetros e retorno tipados: function contar(lista: Student[]): number.
+• Arrow functions: (s) => s.level === 'junior'. Usadas o tempo todo em filter, map e find.
+
+Generics: <T> é um tipo variável. pickRandom<T>(lista: T[]): T funciona com qualquer lista e devolve o tipo certo. É o mesmo recurso de http.get<User[]>() no tópico 07.
+
+Classes: componentes, serviços e pipes são classes.
+• private: só a própria classe usa. protected: a classe e o template do componente.
+• readonly: não muda depois de criado.
+• constructor: roda quando a instância é criada.
+• get: propriedade calculada, lida sem parênteses.
+
+Decorators: @Component, @Injectable e @Pipe são decorators. Eles ficam em cima da classe e dizem ao Angular o que ela é.
+
+Teste no exemplo: troque o Level, sorteie e ganhe XP. No arquivo models.ts há linhas comentadas com erros que o TypeScript impede: descomente uma no editor para ver o aviso.`;
+
+  protected readonly typescript: CodeFile[] = [
+    { label: 'models.ts', path: demo('typescript/models.ts') },
+    { label: 'utils.ts', path: demo('typescript/utils.ts') },
+    { label: 'xp-counter.ts', path: demo('typescript/xp-counter.ts') },
+    { label: 'ts-demo.html', path: demo('typescript/ts-demo.html') },
+    { label: 'ts-demo.css', path: demo('typescript/ts-demo.css') },
+    { label: 'ts-demo.ts', path: demo('typescript/ts-demo.ts') },
   ];
 }
