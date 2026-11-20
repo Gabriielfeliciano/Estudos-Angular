@@ -1,0 +1,35 @@
+<div class="products">
+  @for (p of products; track p.id) {
+    <!-- [product] e [inCart]: inputs (pai → filho) -->
+    <!-- (added): output (filho → pai). $event é o produto emitido -->
+    <app-product-card [product]="p" [inCart]="quantityOf(p)" (added)="addToCart($event)" />
+  }
+</div>
+
+<section class="cart">
+  <h4>Carrinho</h4>
+
+  <!-- Lendo signals no template: sempre com () -->
+  @for (item of cart(); track item.product.id) {
+    <p class="line">
+      <span>{{ item.quantity }}x {{ item.product.name }}</span>
+      <span>{{ item.product.price * item.quantity | currency: 'BRL' }}</span>
+    </p>
+  } @empty {
+    <p class="empty">Vazio</p>
+  }
+
+  <!-- computed: count, total e freeShipping se atualizam sozinhos -->
+  <p class="total">
+    <span>{{ count() }} item(ns)</span>
+    <strong>{{ total() | currency: 'BRL' }}</strong>
+  </p>
+
+  @if (freeShipping()) {
+    <p class="free">Frete grátis!</p>
+  } @else {
+    <p class="hint">Frete grátis a partir de R$100</p>
+  }
+
+  <button type="button" (click)="clear()" [disabled]="count() === 0">Limpar</button>
+</section>

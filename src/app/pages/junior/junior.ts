@@ -7,6 +7,7 @@ import { FormsDemo } from './demos/forms/forms-demo';
 import { HttpDemo } from './demos/http/http-demo';
 import { RoutingDemo } from './demos/routing/routing-demo';
 import { ServicesDemo } from './demos/services/services-demo';
+import { SignalsDemo } from './demos/signals/signals-demo';
 import { TsDemo } from './demos/typescript/ts-demo';
 
 // Os arquivos dos exemplos (pasta demos/) são publicados em /code/junior
@@ -15,7 +16,17 @@ const demo = (file: string) => `/code/junior/${file}`;
 
 @Component({
   selector: 'app-junior',
-  imports: [TopicCard, BindingDemo, DirectivesDemo, ServicesDemo, RoutingDemo, FormsDemo, HttpDemo, TsDemo],
+  imports: [
+    TopicCard,
+    BindingDemo,
+    DirectivesDemo,
+    ServicesDemo,
+    RoutingDemo,
+    FormsDemo,
+    HttpDemo,
+    TsDemo,
+    SignalsDemo,
+  ],
   templateUrl: './junior.html',
   styleUrl: './junior.css',
 })
@@ -350,5 +361,34 @@ Teste no exemplo: troque o Level, sorteie e ganhe XP. No arquivo models.ts há l
     { label: 'ts-demo.html', path: demo('typescript/ts-demo.html') },
     { label: 'ts-demo.css', path: demo('typescript/ts-demo.css') },
     { label: 'ts-demo.ts', path: demo('typescript/ts-demo.ts') },
+  ];
+
+  // 09 - Signals e inputs/outputs
+  protected readonly signalsDescription = `Signal é um valor reativo: quando ele muda, o Angular sabe exatamente o que precisa atualizar na tela. É a forma moderna de guardar estado em Angular. Nos tópicos anteriores usamos propriedades comuns para focar em cada assunto; daqui pra frente, o padrão é usar signals.
+
+O básico:
+• signal(valor): cria. Ler é chamar como função: cart(). No template também: {{ count() }}.
+• set(novo): troca o valor inteiro.
+• update(fn): calcula o novo valor a partir do atual. Crie sempre um array ou objeto novo, sem alterar o antigo.
+• computed(() => ...): valor derivado de outros signals. Recalcula sozinho quando eles mudam e não aceita set().
+• effect(() => ...): roda um efeito colateral (log, salvar no localStorage...) sempre que um signal lido dentro dele muda.
+
+Comunicação entre componentes:
+• input(): o filho recebe dados do pai. No pai: [product]="p". O input também é um signal, lido com product(). Com input.required() o pai é obrigado a passar; com input(0) existe um valor padrão.
+• output(): o filho avisa o pai que algo aconteceu. O filho chama added.emit(valor); o pai escuta com (added)="addToCart($event)", e $event é o valor emitido.
+
+A regra é: dados descem por input, eventos sobem por output. O filho não altera o estado do pai diretamente.
+
+No exemplo, o ProductCard (filho) só mostra o produto e emite "adicionado". O SignalsDemo (pai) guarda o carrinho num signal e calcula a quantidade, o total e o frete grátis com computed.
+
+Teste no exemplo: adicione produtos e veja o carrinho, o total, o contador em cada botão e o frete grátis mudarem juntos. Abra o console (F12) para ver o effect rodando a cada mudança.`;
+
+  protected readonly signals: CodeFile[] = [
+    { label: 'signals-demo.html', path: demo('signals/signals-demo.html') },
+    { label: 'signals-demo.css', path: demo('signals/signals-demo.css') },
+    { label: 'signals-demo.ts', path: demo('signals/signals-demo.ts') },
+    { label: 'product-card.html', path: demo('signals/product-card.html') },
+    { label: 'product-card.css', path: demo('signals/product-card.css') },
+    { label: 'product-card.ts', path: demo('signals/product-card.ts') },
   ];
 }
