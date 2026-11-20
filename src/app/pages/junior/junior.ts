@@ -3,6 +3,7 @@ import { CodeFile } from '../../shared/code-viewer/code-viewer';
 import { TopicCard } from '../../shared/topic-card/topic-card';
 import { BindingDemo } from './demos/binding/binding-demo';
 import { DirectivesDemo } from './demos/directives/directives-demo';
+import { FormsDemo } from './demos/forms/forms-demo';
 import { RoutingDemo } from './demos/routing/routing-demo';
 import { ServicesDemo } from './demos/services/services-demo';
 
@@ -12,7 +13,7 @@ const demo = (file: string) => `/code/junior/${file}`;
 
 @Component({
   selector: 'app-junior',
-  imports: [TopicCard, BindingDemo, DirectivesDemo, ServicesDemo, RoutingDemo],
+  imports: [TopicCard, BindingDemo, DirectivesDemo, ServicesDemo, RoutingDemo, FormsDemo],
   templateUrl: './junior.html',
   styleUrl: './junior.css',
 })
@@ -200,5 +201,37 @@ export const routes: Routes = [
     { label: 'routing-demo.ts', path: demo('routing/routing-demo.ts') },
     { label: 'lesson-detail.ts', path: demo('routing/lesson-detail.ts') },
     { label: 'lessons.ts', path: demo('routing/lessons.ts') },
+  ];
+
+  // 06 - Formulários template-driven e reactive
+  protected readonly formsDescription = `O Angular tem duas formas de criar formulários. As duas fazem a mesma coisa (ler valores, validar, mostrar erros); muda onde o formulário é definido.
+
+Template-driven (FormsModule):
+• O formulário vive no HTML. Cada campo usa [(ngModel)] e precisa de um name.
+• As validações são atributos do HTML: required, minlength, email...
+• Variáveis de template dão acesso ao estado: #f="ngForm" para o formulário e #nameCtrl="ngModel" para um campo.
+• Bom para formulários simples.
+
+Reactive (ReactiveFormsModule):
+• O formulário vive na classe: FormBuilder cria um FormGroup com um FormControl por campo, cada um com valor inicial e Validators.
+• O HTML só liga as partes: [formGroup] no <form> e formControlName em cada campo.
+• Mais controle e mais fácil de testar e de crescer. É o mais usado em formulários grandes.
+
+Nos dois casos:
+• Cada campo tem estados: valid/invalid, touched (o usuário saiu do campo) e dirty (o valor mudou). Mostrar o erro só com touched evita erro antes de digitar.
+• O Angular coloca classes CSS sozinho, como ng-invalid e ng-touched, usadas aqui para deixar a borda vermelha.
+• (ngSubmit) chama o método de envio.
+
+Teste no exemplo: clique nos campos e saia sem preencher, digite um e-mail inválido e envie. Os blocos cinza mostram o valor e o estado de cada formulário em tempo real.`;
+
+  protected readonly forms: CodeFile[] = [
+    { label: 'template-form.html', path: demo('forms/template-form.html') },
+    { label: 'template-form.ts', path: demo('forms/template-form.ts') },
+    { label: 'reactive-form.html', path: demo('forms/reactive-form.html') },
+    { label: 'reactive-form.ts', path: demo('forms/reactive-form.ts') },
+    { label: 'form.css', path: demo('forms/form.css') },
+    { label: 'forms-demo.html', path: demo('forms/forms-demo.html') },
+    { label: 'forms-demo.css', path: demo('forms/forms-demo.css') },
+    { label: 'forms-demo.ts', path: demo('forms/forms-demo.ts') },
   ];
 }

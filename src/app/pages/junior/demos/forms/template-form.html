@@ -1,0 +1,46 @@
+<!-- #f="ngForm": variável com o formulário inteiro (valor, válido/inválido...) -->
+<form #f="ngForm" (ngSubmit)="submit(f)">
+  <label>
+    Nome
+    <!-- name="..." é obrigatório com ngModel dentro de um <form> -->
+    <!-- required e minlength: validações escritas no próprio HTML -->
+    <!-- #nameCtrl="ngModel": variável com o estado deste campo -->
+    <input name="name" [(ngModel)]="student.name" required minlength="3" #nameCtrl="ngModel" />
+  </label>
+  <!-- touched: o usuário já saiu do campo. Evita mostrar erro antes de digitar -->
+  @if (nameCtrl.invalid && nameCtrl.touched) {
+    @if (nameCtrl.errors?.['required']) {
+      <span class="error">Nome é obrigatório</span>
+    } @else if (nameCtrl.errors?.['minlength']) {
+      <span class="error">Mínimo de 3 letras</span>
+    }
+  }
+
+  <label>
+    E-mail
+    <input name="email" type="email" [(ngModel)]="student.email" required email #emailCtrl="ngModel" />
+  </label>
+  @if (emailCtrl.invalid && emailCtrl.touched) {
+    <span class="error">Informe um e-mail válido</span>
+  }
+
+  <label>
+    Nível
+    <select name="level" [(ngModel)]="student.level">
+      <option value="junior">Junior</option>
+      <option value="mid">Mid</option>
+      <option value="senior">Senior</option>
+    </select>
+  </label>
+
+  <!-- f.invalid: true enquanto algum campo estiver inválido -->
+  <button type="submit" [disabled]="f.invalid">Cadastrar</button>
+</form>
+
+@if (sent) {
+  <p class="sent">{{ sent }}</p>
+}
+
+<!-- Pipe json: mostra o objeto inteiro, útil para estudar -->
+<pre class="debug">valid: {{ f.valid }}
+value: {{ f.value | json }}</pre>

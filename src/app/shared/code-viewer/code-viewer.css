@@ -1,10 +1,15 @@
+/* Abas numa linha só; se não couberem, rolam para o lado */
 .tabs {
   display: flex;
-  flex-wrap: wrap;
   gap: 4px;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #8b949e transparent;
 }
 
 .tab {
+  flex-shrink: 0;
+  white-space: nowrap;
   padding: 6px 12px;
   border: 0;
   border-radius: 6px 6px 0 0;

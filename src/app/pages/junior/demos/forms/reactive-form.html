@@ -1,0 +1,51 @@
+<!-- [formGroup]: liga o <form> ao FormGroup criado na classe -->
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <label>
+    Nome
+    <!-- formControlName: liga o campo ao controle "name" do grupo -->
+    <input formControlName="name" />
+  </label>
+  <!-- As validações estão na classe; aqui só lemos o estado -->
+  @if (form.controls.name.invalid && form.controls.name.touched) {
+    @if (form.controls.name.hasError('required')) {
+      <span class="error">Nome é obrigatório</span>
+    } @else if (form.controls.name.hasError('minlength')) {
+      <span class="error">Mínimo de 3 letras</span>
+    }
+  }
+
+  <label>
+    E-mail
+    <input type="email" formControlName="email" />
+  </label>
+  @if (form.controls.email.invalid && form.controls.email.touched) {
+    <span class="error">Informe um e-mail válido</span>
+  }
+
+  <label>
+    Idade
+    <input type="number" formControlName="age" />
+  </label>
+  @if (form.controls.age.hasError('min')) {
+    <span class="error">Idade mínima: 16</span>
+  }
+
+  <label>
+    Nível
+    <select formControlName="level">
+      <option value="junior">Junior</option>
+      <option value="mid">Mid</option>
+      <option value="senior">Senior</option>
+    </select>
+  </label>
+
+  <!-- Aqui o botão fica sempre ativo: o submit() marca os erros se estiver inválido -->
+  <button type="submit">Cadastrar</button>
+</form>
+
+@if (sent) {
+  <p class="sent">{{ sent }}</p>
+}
+
+<pre class="debug">status: {{ form.status }}
+value: {{ form.value | json }}</pre>
