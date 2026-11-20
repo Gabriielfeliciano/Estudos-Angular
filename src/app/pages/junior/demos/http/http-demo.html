@@ -1,0 +1,53 @@
+<div class="actions">
+  <button type="button" (click)="loadUsers()" [disabled]="loading">GET /users</button>
+  <button type="button" (click)="forceError()" [disabled]="loading">GET /users/999 (erro)</button>
+</div>
+
+<!-- Estados: carregando e erro -->
+@if (loading) {
+  <p class="status">Carregando...</p>
+}
+@if (error) {
+  <p class="status error">{{ error }}</p>
+}
+
+<div class="columns">
+  <section>
+    <h4>Usuários</h4>
+    <ul>
+      @for (user of users; track user.id) {
+        <li [class.active]="selected?.id === user.id" (click)="selectUser(user.id)">
+          {{ user.name }}
+        </li>
+      } @empty {
+        <li class="empty">Clique em GET /users</li>
+      }
+    </ul>
+  </section>
+
+  <section>
+    <h4>Detalhe (GET /users/:id)</h4>
+    @if (selected) {
+      <dl>
+        <dt>Nome</dt><dd>{{ selected.name }}</dd>
+        <dt>E-mail</dt><dd>{{ selected.email }}</dd>
+        <dt>Cidade</dt><dd>{{ selected.address.city }}</dd>
+        <dt>Empresa</dt><dd>{{ selected.company.name }}</dd>
+      </dl>
+    } @else {
+      <p class="empty">Clique em um usuário</p>
+    }
+  </section>
+</div>
+
+<section class="post">
+  <h4>Criar post (POST /posts)</h4>
+  <div class="actions">
+    <input [(ngModel)]="postTitle" placeholder="Título do post" />
+    <button type="button" (click)="createPost()" [disabled]="loading || !postTitle.trim()">Enviar</button>
+  </div>
+  @if (createdPost) {
+    <!-- A resposta da API, com o id gerado -->
+    <pre class="response">{{ createdPost | json }}</pre>
+  }
+</section>

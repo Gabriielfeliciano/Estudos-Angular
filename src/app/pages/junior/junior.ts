@@ -4,6 +4,7 @@ import { TopicCard } from '../../shared/topic-card/topic-card';
 import { BindingDemo } from './demos/binding/binding-demo';
 import { DirectivesDemo } from './demos/directives/directives-demo';
 import { FormsDemo } from './demos/forms/forms-demo';
+import { HttpDemo } from './demos/http/http-demo';
 import { RoutingDemo } from './demos/routing/routing-demo';
 import { ServicesDemo } from './demos/services/services-demo';
 
@@ -13,7 +14,7 @@ const demo = (file: string) => `/code/junior/${file}`;
 
 @Component({
   selector: 'app-junior',
-  imports: [TopicCard, BindingDemo, DirectivesDemo, ServicesDemo, RoutingDemo, FormsDemo],
+  imports: [TopicCard, BindingDemo, DirectivesDemo, ServicesDemo, RoutingDemo, FormsDemo, HttpDemo],
   templateUrl: './junior.html',
   styleUrl: './junior.css',
 })
@@ -233,5 +234,52 @@ Teste no exemplo: clique nos campos e saia sem preencher, digite um e-mail invá
     { label: 'forms-demo.html', path: demo('forms/forms-demo.html') },
     { label: 'forms-demo.css', path: demo('forms/forms-demo.css') },
     { label: 'forms-demo.ts', path: demo('forms/forms-demo.ts') },
+  ];
+
+  // 07 - HttpClient para consumir APIs
+  protected readonly httpDescription = `HttpClient é o serviço do Angular para conversar com APIs: buscar, enviar, atualizar e apagar dados pela rede.
+
+Configuração: o app.config.ts precisa ter provideHttpClient() nos providers. Sem isso, inject(HttpClient) dá erro.
+
+Métodos principais, um para cada verbo HTTP:
+• get<T>(url): busca dados.
+• post<T>(url, corpo): cria um registro.
+• put<T>(url, corpo) e patch<T>(url, corpo): atualizam um registro.
+• delete<T>(url): apaga um registro.
+O <T> informa o tipo da resposta, então o TypeScript sabe que campos ela tem. Parâmetros de query (?_limit=5) vão em { params: {...} }.
+
+Observable: os métodos não devolvem os dados direto, devolvem um Observable. A requisição só sai quando alguém chama subscribe(), que recebe:
+• next: a resposta, quando dá certo.
+• error: um HttpErrorResponse, quando falha. O err.status traz o código HTTP (404, 500...).
+
+Boa prática: as chamadas ficam num serviço (users-api.service.ts) e o componente só chama o serviço e cuida da tela: os estados de carregando, erro e dados.
+
+O exemplo usa a jsonplaceholder, uma API pública de testes. Ela precisa de internet, e o POST é de mentira: a API devolve o objeto com um id novo, mas não salva nada.
+
+Teste no exemplo: busque os usuários, clique em um para ver o detalhe, force o erro 404 e crie um post. Para ver as requisições de verdade, abra o DevTools (F12) na aba Network.`;
+
+  protected readonly http: CodeFile[] = [
+    {
+      label: 'app.config.ts',
+      language: 'typescript',
+      code: `import { provideHttpClient } from '@angular/common/http';
+import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
+import { provideRouter } from '@angular/router';
+
+import { routes } from './app.routes';
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideBrowserGlobalErrorListeners(),
+    provideZoneChangeDetection({ eventCoalescing: true }),
+    provideRouter(routes),
+    provideHttpClient() // habilita o HttpClient no app inteiro
+  ]
+};`,
+    },
+    { label: 'users-api.service.ts', path: demo('http/users-api.service.ts') },
+    { label: 'http-demo.html', path: demo('http/http-demo.html') },
+    { label: 'http-demo.css', path: demo('http/http-demo.css') },
+    { label: 'http-demo.ts', path: demo('http/http-demo.ts') },
   ];
 }

@@ -1,0 +1,113 @@
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+button {
+  padding: 6px 12px;
+  border: 0;
+  border-radius: 6px;
+  background: var(--sidebar-bg);
+  color: #fff;
+  font: inherit;
+  font-family: Consolas, 'Courier New', monospace;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+input {
+  flex: 1;
+  min-width: 160px;
+  padding: 6px 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font: inherit;
+}
+
+.status {
+  margin: 10px 0 0;
+  font-weight: 600;
+}
+
+.status.error {
+  color: #b42318;
+}
+
+.columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+
+section {
+  padding: 12px;
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.post {
+  margin-top: 12px;
+}
+
+h4 {
+  margin: 0 0 8px;
+  font-size: 0.85rem;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+li {
+  padding: 6px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+li:hover,
+li.active {
+  background: var(--button-bg);
+}
+
+li.empty {
+  cursor: default;
+}
+
+.empty {
+  margin: 0;
+  opacity: 0.6;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 4px 12px;
+  margin: 0;
+}
+
+dt {
+  font-weight: 600;
+}
+
+dd {
+  margin: 0;
+}
+
+.response {
+  margin: 10px 0 0;
+  padding: 8px;
+  border-radius: 6px;
+  background: #f2f2f2;
+  font-size: 0.75rem;
+  white-space: pre-wrap;
+}
