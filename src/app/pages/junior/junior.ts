@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CodeFile } from '../../shared/code-viewer/code-viewer';
+import { TOPIC_COUNT } from '../../shared/progress/curriculum';
+import { ProgressService } from '../../shared/progress/progress.service';
 import { TopicCard } from '../../shared/topic-card/topic-card';
 import { BindingDemo } from './demos/binding/binding-demo';
 import { DirectivesDemo } from './demos/directives/directives-demo';
@@ -31,6 +33,9 @@ const demo = (file: string) => `/code/junior/${file}`;
   styleUrl: './junior.css',
 })
 export class Junior {
+  protected readonly progress = inject(ProgressService);
+  protected readonly total = TOPIC_COUNT.junior;
+
   // 01 - Instalação e Angular CLI
   protected readonly installDescription = `Para criar um projeto Angular você precisa de duas coisas: o Node.js (que já vem com o npm) e o Angular CLI.
 
@@ -231,13 +236,15 @@ import { routingDemoRoutes } from './pages/junior/demos/routing/routing-demo.rou
 import { Junior } from './pages/junior/junior';
 import { Mid } from './pages/mid';
 import { Senior } from './pages/senior';
+import { levelUnlocked } from './shared/progress/level-unlocked.guard';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'junior' },
   // children: rotas filhas, mostradas no <router-outlet> do exemplo de roteamento
   { path: 'junior', component: Junior, children: routingDemoRoutes },
-  { path: 'mid', component: Mid },
-  { path: 'senior', component: Senior },
+  // canActivate: guard que só deixa entrar se o nível estiver desbloqueado
+  { path: 'mid', component: Mid, canActivate: [levelUnlocked('mid')] },
+  { path: 'senior', component: Senior, canActivate: [levelUnlocked('senior')] },
   // ** (wildcard): qualquer URL que não bateu acima volta para /junior
   { path: '**', redirectTo: 'junior' },
 ];`,

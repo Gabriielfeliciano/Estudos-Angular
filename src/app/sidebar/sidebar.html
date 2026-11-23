@@ -5,11 +5,22 @@
   </div>
 
   <nav class="menu" aria-label="Níveis">
-    @for (level of levels; track level.path; let i = $index) {
-      <a class="menu-item" [routerLink]="level.path" routerLinkActive="active">
-        <span>{{ level.label }}</span>
-        <span class="badge">{{ '0' + (i + 1) }}</span>
-      </a>
+    @for (level of levels; track level; let i = $index) {
+      @if (progress.isUnlocked(level)) {
+        <a class="menu-item" [routerLink]="level" routerLinkActive="active">
+          <span>{{ labels[level] }}</span>
+          <span class="badge">{{ '0' + (i + 1) }}</span>
+        </a>
+      } @else {
+        <span
+          class="menu-item locked"
+          aria-disabled="true"
+          [title]="'Conclua todos os tópicos de ' + labels[progress.previousLevel(level)!] + ' para desbloquear'"
+        >
+          <span>{{ labels[level] }}</span>
+          <span class="badge">🔒</span>
+        </span>
+      }
     }
   </nav>
 

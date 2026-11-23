@@ -1,8 +1,23 @@
 <h1>Junior</h1>
 <p class="intro">Fundamentos de Angular. Abra um tópico para ver a explicação, o exemplo e o código.</p>
 
+<div class="progress">
+  <div class="progress-text">
+    <span>{{ progress.doneCount('junior') }}/{{ total }} tópicos concluídos</span>
+    @if (progress.isLevelComplete('junior')) {
+      <strong>Mid desbloqueado! 🔓</strong>
+    } @else {
+      <span class="hint">Conclua todos para desbloquear o Mid 🔒</span>
+    }
+  </div>
+  <div class="bar">
+    <div class="fill" [style.width.%]="(progress.doneCount('junior') / total) * 100"></div>
+  </div>
+</div>
+
 <div class="topics">
   <app-topic-card
+    level="junior"
     [index]="1"
     title="Instalação e Angular CLI"
     [description]="installDescription"
@@ -11,6 +26,7 @@
   />
 
   <app-topic-card
+    level="junior"
     [index]="2"
     title="Componentes, templates e data binding"
     [description]="bindingDescription"
@@ -20,6 +36,7 @@
   </app-topic-card>
 
   <app-topic-card
+    level="junior"
     [index]="3"
     title="Diretivas (@if, @for, ngClass...) e pipes"
     [description]="directivesDescription"
@@ -29,6 +46,7 @@
   </app-topic-card>
 
   <app-topic-card
+    level="junior"
     [index]="4"
     title="Serviços e injeção de dependência básica"
     [description]="servicesDescription"
@@ -38,6 +56,7 @@
   </app-topic-card>
 
   <app-topic-card
+    level="junior"
     [index]="5"
     title="Roteamento simples (rotas, parâmetros, navegação)"
     [description]="routingDescription"
@@ -47,6 +66,7 @@
   </app-topic-card>
 
   <app-topic-card
+    level="junior"
     [index]="6"
     title="Formulários template-driven e reactive básicos"
     [description]="formsDescription"
@@ -56,6 +76,7 @@
   </app-topic-card>
 
   <app-topic-card
+    level="junior"
     [index]="7"
     title="HttpClient para consumir APIs"
     [description]="httpDescription"
@@ -65,6 +86,7 @@
   </app-topic-card>
 
   <app-topic-card
+    level="junior"
     [index]="8"
     title="TypeScript básico para Angular"
     [description]="typescriptDescription"
@@ -74,6 +96,7 @@
   </app-topic-card>
 
   <app-topic-card
+    level="junior"
     [index]="9"
     title="Signals e inputs/outputs"
     [description]="signalsDescription"

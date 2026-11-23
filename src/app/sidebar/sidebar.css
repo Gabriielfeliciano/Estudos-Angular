@@ -58,6 +58,14 @@
   background: var(--button-active-bg);
 }
 
+/* Nível trancado: sem link, apagado */
+.menu-item.locked,
+.menu-item.locked:hover {
+  background: var(--button-bg);
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
 .badge {
   display: grid;
   place-items: center;
