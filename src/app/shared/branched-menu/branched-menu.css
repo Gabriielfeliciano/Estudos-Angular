@@ -1,0 +1,197 @@
+:host {
+  --bm-muted: color-mix(in srgb, var(--bm-ink) 60%, transparent);
+  display: block;
+}
+
+.menu {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  max-width: min(var(--bm-w), 100%);
+  padding-left: 14px;
+  color: var(--bm-ink);
+  font-family: inherit;
+  font-size: var(--bm-font);
+  line-height: 1.2;
+}
+
+/* Linha vertical à esquerda, sumindo para baixo */
+.menu::before {
+  content: '';
+  position: absolute;
+  top: 8px;
+  bottom: 0;
+  left: 0;
+  width: 2px;
+  border-radius: 1px;
+  background: linear-gradient(to bottom, var(--bm-line) 0%, var(--bm-line) 55%, transparent 100%);
+}
+
+/* Marcador que desliza até a seção ativa */
+.marker {
+  position: absolute;
+  top: -1px;
+  left: 0;
+  z-index: 1;
+  width: 2px;
+  height: 16px;
+  border-radius: 1px;
+  background: var(--bm-accent);
+  opacity: 0;
+  transition:
+    top 220ms cubic-bezier(0.23, 1, 0.32, 1),
+    opacity 150ms ease;
+}
+
+.marker[data-on] {
+  opacity: 1;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+}
+
+.head {
+  display: block;
+  margin: 0;
+  padding: 9px 0;
+  border: 0;
+  background: transparent;
+  color: var(--bm-muted);
+  font-family: inherit;
+  font-size: calc(var(--bm-font) + 1px);
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  transition: color 200ms ease;
+}
+
+.section[data-open] .head,
+.head[data-active],
+.head:hover {
+  color: var(--bm-ink);
+}
+
+.head[data-active] {
+  font-weight: 700;
+}
+
+.fold {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--bm-fold) cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.section[data-open] .fold {
+  grid-template-rows: 1fr;
+}
+
+.fold-inner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.body {
+  position: relative;
+  box-sizing: border-box;
+  padding: 6px 0;
+}
+
+.branches {
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: visible;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+
+.section[data-open] .branches {
+  opacity: 1;
+  transition: opacity 250ms ease 100ms;
+}
+
+.line,
+.reach {
+  fill: none;
+  stroke-width: var(--bm-line-w);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.line {
+  stroke: var(--bm-line);
+}
+
+/* O galho do item ativo "se desenha" do topo até ele */
+.reach {
+  stroke: var(--bm-accent);
+  transition: stroke-dashoffset var(--bm-draw) cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.child {
+  display: flex;
+  box-sizing: border-box;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  height: var(--bm-row);
+  margin: 0;
+  padding: 0 0 0 var(--bm-indent);
+  border: 0;
+  background: transparent;
+  color: var(--bm-muted);
+  font-family: inherit;
+  font-size: var(--bm-font);
+  text-align: left;
+  cursor: pointer;
+  transition: color 200ms ease;
+}
+
+.child:hover {
+  color: var(--bm-ink);
+}
+
+.child[data-active] {
+  color: var(--bm-accent);
+  font-weight: 700;
+}
+
+.child:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.child:disabled:hover {
+  color: var(--bm-muted);
+}
+
+.icon {
+  display: inline-flex;
+  flex: none;
+  justify-content: center;
+  width: 16px;
+  font-size: 0.8em;
+}
+
+.label {
+  white-space: nowrap;
+}
+
+.head:focus-visible,
+.child:focus-visible {
+  outline: 2px solid var(--bm-accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marker,
+  .fold,
+  .reach {
+    transition: none;
+  }
+}

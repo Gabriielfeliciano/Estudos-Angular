@@ -1,0 +1,96 @@
+<header class="intro" appAnimatedContent [distance]="30">
+  <p class="eyebrow">
+    {{ group?.label }} · Tópico {{ position }} de {{ total }}
+    @if (done()) {
+      <span class="done-badge">✓ Concluído</span>
+    }
+  </p>
+  <h1>{{ topic.title }}</h1>
+  <p class="summary">{{ topic.summary }}</p>
+</header>
+
+<!-- Trilha do tópico: mostra em que etapa você está -->
+<nav class="trail" aria-label="Etapas do tópico">
+  @for (step of steps; track step.id; let i = $index) {
+    <button
+      type="button"
+      class="trail-step"
+      [class.current]="currentStep() === step.id"
+      [attr.aria-current]="currentStep() === step.id ? 'step' : null"
+      (click)="goTo(step.id)"
+    >
+      <span class="trail-number">{{ i + 1 }}</span>
+      {{ step.label }}
+    </button>
+  }
+</nav>
+
+<!-- 1. Entenda -->
+<section #step id="entenda" class="step">
+  <h2 appAnimatedContent [distance]="30"><span>1</span> Entenda</h2>
+  <div class="paragraphs" appAnimatedContent [stagger]="0.06" [distance]="30" [duration]="0.6">
+    @for (p of paragraphs; track $index) {
+      <p>{{ p }}</p>
+    }
+  </div>
+</section>
+
+<!-- 2. Veja funcionando -->
+@if (topic.demo) {
+  <section #step id="exemplo" class="step">
+    <h2 appAnimatedContent [distance]="30"><span>2</span> Veja funcionando</h2>
+    <div appAnimatedContent [distance]="40">
+      @if (topic.tryIt) {
+        <p class="try-it"><strong>Teste:</strong> {{ topic.tryIt }}</p>
+      }
+      <div class="demo">
+        <!-- ngComponentOutlet: renderiza o componente do exemplo deste tópico -->
+        <ng-container *ngComponentOutlet="topic.demo" />
+      </div>
+    </div>
+  </section>
+}
+
+<!-- 3. Leia o código -->
+<section #step id="codigo" class="step">
+  <h2 appAnimatedContent [distance]="30"><span>{{ topic.demo ? 3 : 2 }}</span> Leia o código</h2>
+  <div appAnimatedContent [distance]="40">
+    <app-code-viewer [files]="topic.files" />
+  </div>
+</section>
+
+<!-- 4. Conclua -->
+<section #step id="concluir" class="step finish" appAnimatedContent [distance]="40" [scale]="0.96">
+  @if (!done()) {
+    <h2>Pronto para avançar?</h2>
+    <p>
+      Conclua este tópico para liberar
+      @if (nextTopic) {
+        o próximo: <strong>{{ nextTopic.title }}</strong>.
+      } @else {
+        o fim do Junior.
+      }
+    </p>
+    <button type="button" class="primary" (click)="completeAndContinue()">
+      @if (nextTopic) {
+        Concluir e seguir →
+      } @else {
+        Concluir o Junior 🎉
+      }
+    </button>
+  } @else {
+    <h2>Tópico concluído ✓</h2>
+    @if (nextTopic) {
+      <p>Próximo: <strong>{{ nextTopic.title }}</strong></p>
+      <a class="primary" [routerLink]="topicUrl(nextTopic.slug)">Ir para o próximo →</a>
+    } @else {
+      <p>Você terminou todos os tópicos do Junior.</p>
+      <a class="primary" routerLink="/">Ver meu progresso</a>
+    }
+    <button type="button" class="link" (click)="undo()">Desmarcar conclusão</button>
+  }
+</section>
+
+@if (previousTopic) {
+  <a class="previous" [routerLink]="topicUrl(previousTopic.slug)">← {{ previousTopic.title }}</a>
+}

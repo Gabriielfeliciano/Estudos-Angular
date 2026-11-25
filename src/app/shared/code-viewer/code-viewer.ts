@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, computed, inject, input, signal } from '@angular/core';
+import { Component, computed, effect, inject, input, signal, untracked } from '@angular/core';
 import hljs from 'highlight.js/lib/core';
 import bash from 'highlight.js/lib/languages/bash';
 import css from 'highlight.js/lib/languages/css';
@@ -62,13 +62,16 @@ export class CodeViewer {
   });
 
   constructor() {
-    queueMicrotask(() => this.select(0));
+    // Busca o arquivo da aba atual sempre que a aba (ou a lista de arquivos) muda.
+    // effect só roda depois que os inputs chegam, então files() já tem valor aqui.
+    effect(() => {
+      const path = this.currentFile()?.path;
+      if (path) untracked(() => this.load(path));
+    });
   }
 
   protected select(index: number) {
     this.selected.set(index);
-    const path = this.files()[index]?.path;
-    if (path) this.load(path);
   }
 
   private languageOf(file: CodeFile | undefined): CodeLanguage {

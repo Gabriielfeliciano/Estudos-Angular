@@ -1,0 +1,195 @@
+:host {
+  display: block;
+  max-width: 880px;
+}
+
+.eyebrow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 6px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.done-badge {
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #067647;
+  color: #fff;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+h1 {
+  margin: 0 0 6px;
+  font-size: 1.8rem;
+  line-height: 1.2;
+}
+
+.summary {
+  margin: 0;
+  font-size: 1.05rem;
+  opacity: 0.8;
+}
+
+/* Trilha fixa no topo enquanto rola a página */
+.trail {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  gap: 6px;
+  margin: 20px -4px 8px;
+  padding: 10px 4px;
+  overflow-x: auto;
+  background: var(--bg);
+}
+
+.trail-step {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background: var(--button-bg);
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.trail-step.current {
+  border-color: var(--ink);
+  background: var(--button-active-bg);
+  font-weight: 700;
+}
+
+.trail-number {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.step {
+  padding-top: 28px;
+  scroll-margin-top: 64px;
+}
+
+h2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 12px;
+  font-size: 1.25rem;
+}
+
+h2 span {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--sidebar-bg);
+  color: #fff;
+  font-size: 0.9rem;
+}
+
+.paragraphs {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.paragraphs p {
+  margin: 0;
+  padding: 14px 16px;
+  border-left: 4px solid var(--sidebar-bg);
+  border-radius: 0 8px 8px 0;
+  background: #fff;
+  line-height: 1.6;
+  white-space: pre-line;
+}
+
+.try-it {
+  margin: 0 0 10px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: var(--button-bg);
+  line-height: 1.5;
+}
+
+.demo {
+  padding: 16px;
+  border: 2px dashed var(--sidebar-bg);
+  border-radius: 8px;
+  background: var(--bg);
+}
+
+/* Etapa final */
+.finish {
+  margin-top: 36px;
+  padding: 24px;
+  border: 2px solid var(--ink);
+  border-radius: 12px;
+  background: #fff;
+  text-align: center;
+}
+
+.finish h2 {
+  justify-content: center;
+}
+
+.finish p {
+  margin: 0 0 16px;
+}
+
+.primary {
+  display: inline-block;
+  padding: 12px 22px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--sidebar-bg);
+  color: #fff;
+  font: inherit;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.primary:hover {
+  filter: brightness(1.05);
+}
+
+.link {
+  display: block;
+  margin: 12px auto 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-size: 0.85rem;
+  text-decoration: underline;
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+.previous {
+  display: inline-block;
+  margin: 20px 0 8px;
+  color: var(--ink);
+  font-size: 0.9rem;
+  opacity: 0.7;
+}

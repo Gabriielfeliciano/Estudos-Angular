@@ -1,28 +1,29 @@
 <aside class="sidebar">
-  <div class="profile">
+  <a class="profile" routerLink="/">
     <img class="avatar" [src]="profile.photo" alt="Foto de perfil" />
-    <span class="name">{{ profile.name }}</span>
+    <span class="who">
+      <span class="name">{{ profile.name }}</span>
+      <span class="score">{{ progress.doneCount() }}/{{ progress.total }} · {{ progress.percent() }}%</span>
+    </span>
+  </a>
+
+  <div class="bar" aria-hidden="true">
+    <div class="fill" [style.width.%]="progress.percent()"></div>
   </div>
 
-  <nav class="menu" aria-label="Níveis">
-    @for (level of levels; track level; let i = $index) {
-      @if (progress.isUnlocked(level)) {
-        <a class="menu-item" [routerLink]="level" routerLinkActive="active">
-          <span>{{ labels[level] }}</span>
-          <span class="badge">{{ '0' + (i + 1) }}</span>
-        </a>
-      } @else {
-        <span
-          class="menu-item locked"
-          aria-disabled="true"
-          [title]="'Conclua todos os tópicos de ' + labels[progress.previousLevel(level)!] + ' para desbloquear'"
-        >
-          <span>{{ labels[level] }}</span>
-          <span class="badge">🔒</span>
-        </span>
-      }
-    }
-  </nav>
+  <!-- Branched Menu: seções do curso com os tópicos em galhos -->
+  <app-branched-menu
+    [items]="items()"
+    [active]="active()"
+    [defaultOpen]="allOpen"
+    [width]="208"
+    [rowHeight]="34"
+    [indent]="38"
+    color="#ffffff"
+    accentColor="#ffe27a"
+    lineColor="rgba(255, 255, 255, 0.35)"
+    (selected)="navigate($event)"
+  />
 
   <div class="footer"></div>
 </aside>

@@ -1,8 +1,8 @@
 <nav class="links">
   @for (lesson of lessons; track lesson.id) {
-    <!-- routerLink: navega sem recarregar a página. O array monta a URL: /junior/aula/1 -->
+    <!-- routerLink: navega sem recarregar a página. O array monta a URL: /topico/roteamento/aula/1 -->
     <!-- routerLinkActive: adiciona a classe "active" quando a URL bate com o link -->
-    <a [routerLink]="['/junior/aula', lesson.id]" routerLinkActive="active">
+    <a [routerLink]="[base, 'aula', lesson.id]" routerLinkActive="active">
       Aula {{ lesson.id }}
     </a>
   }
@@ -11,8 +11,8 @@
   <button type="button" (click)="goToRandom()">Aula aleatória</button>
   <button type="button" (click)="goToMissing()">Aula inexistente</button>
 
-  <!-- Link simples: volta para /junior (sem rota filha) -->
-  <a routerLink="/junior">Limpar</a>
+  <!-- Link simples: volta para a página do tópico (sem rota filha) -->
+  <a [routerLink]="base">Limpar</a>
 </nav>
 
 <div class="outlet">

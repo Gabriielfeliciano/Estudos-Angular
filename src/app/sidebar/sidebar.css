@@ -2,15 +2,19 @@
   display: flex;
 }
 
+/* Fica presa na tela enquanto a página rola */
 .sidebar {
   position: sticky;
+  top: 0;
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  width: 204px;
+  gap: 16px;
+  width: 240px;
+  height: 100vh;
   flex-shrink: 0;
   padding: 16px;
   box-sizing: border-box;
+  overflow-y: auto;
   border-radius: 0px 12px 12px 0px;
   background: var(--sidebar-bg);
 }
@@ -19,6 +23,8 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  color: #fff;
+  text-decoration: none;
 }
 
 .avatar {
@@ -29,51 +35,32 @@
   background: var(--button-bg);
 }
 
+.who {
+  display: flex;
+  flex-direction: column;
+}
+
 .name {
-  color: #fff;
   font-weight: 600;
   font-size: 1rem;
 }
 
-.menu {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+.score {
+  font-size: 0.75rem;
+  opacity: 0.85;
 }
 
-.menu-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 6px 8px 6px 10px;
-  border-radius: 6px;
-  background: var(--button-bg);
-  color: var(--ink);
-  font-weight: 600;
-  text-decoration: none;
+.bar {
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.3);
+  overflow: hidden;
 }
 
-.menu-item:hover,
-.menu-item.active {
+.fill {
+  height: 100%;
   background: var(--button-active-bg);
-}
-
-/* Nível trancado: sem link, apagado */
-.menu-item.locked,
-.menu-item.locked:hover {
-  background: var(--button-bg);
-  opacity: 0.55;
-  cursor: not-allowed;
-}
-
-.badge {
-  display: grid;
-  place-items: center;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: #fff;
-  font-size: 0.65rem;
+  transition: width 0.3s;
 }
 
 .footer {

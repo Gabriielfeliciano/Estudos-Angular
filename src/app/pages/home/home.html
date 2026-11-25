@@ -1,0 +1,80 @@
+<header class="hero" appAnimatedContent [distance]="30">
+  <img class="avatar" [src]="profile.photo" alt="" />
+  <div>
+    <p class="hello">Olá, {{ profile.name }} 👋</p>
+    <h1>
+      @if (progress.allDone()) {
+        Junior concluído! 🎉
+      } @else if (progress.doneCount() === 0) {
+        Pronto para começar?
+      } @else {
+        Bora continuar?
+      }
+    </h1>
+  </div>
+</header>
+
+@if (justFinished) {
+  <p class="celebrate" appAnimatedContent [scale]="0.9" [distance]="20">
+    Você concluiu todos os tópicos do Junior. Parabéns! 🏆
+  </p>
+}
+
+<!-- Progresso geral -->
+<section class="panel progress" appAnimatedContent [distance]="40" [delay]="0.1">
+  <div class="progress-head">
+    <span>Seu progresso</span>
+    <strong>{{ progress.percent() }}%</strong>
+  </div>
+  <div class="bar">
+    <div class="fill" [style.width.%]="progress.percent()"></div>
+  </div>
+  <p class="count">{{ progress.doneCount() }} de {{ progress.total }} tópicos concluídos</p>
+
+  @if (progress.current(); as next) {
+    <a class="primary" [routerLink]="topicUrl(next.slug)">
+      {{ progress.doneCount() === 0 ? 'Começar' : 'Continuar' }}: {{ next.title }} →
+    </a>
+  }
+</section>
+
+<!-- Trilha completa, por grupo -->
+@for (group of groups; track group.id; let g = $index) {
+  <section class="group">
+    <h2 appAnimatedContent [distance]="30">
+      {{ group.label }}
+      <span class="group-count">{{ groupDone(g) }}/{{ group.topics.length }}</span>
+    </h2>
+
+    <ul class="topics" appAnimatedContent [stagger]="0.06" [distance]="40" [duration]="0.6">
+      @for (topic of group.topics; track topic.slug) {
+        @let done = progress.isDone(topic.slug);
+        @let unlocked = progress.isUnlocked(topic.slug);
+        @let current = progress.current()?.slug === topic.slug;
+
+        <li>
+          @if (unlocked) {
+            <a class="topic" [class.done]="done" [class.current]="current" [routerLink]="topicUrl(topic.slug)">
+              <span class="status">{{ done ? '✓' : number(topic.slug) }}</span>
+              <span class="text">
+                <strong>{{ topic.title }}</strong>
+                <small>{{ topic.summary }}</small>
+              </span>
+              @if (current) {
+                <span class="tag">Agora</span>
+              }
+            </a>
+          } @else {
+            <div class="topic locked" title="Conclua o tópico anterior para desbloquear">
+              <span class="status">🔒</span>
+              <span class="text">
+                <strong>{{ topic.title }}</strong>
+                <small>{{ topic.summary }}</small>
+              </span>
+            </div>
+          }
+        </li>
+      }
+    </ul>
+  </section>
+}

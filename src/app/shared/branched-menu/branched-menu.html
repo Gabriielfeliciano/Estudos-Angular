@@ -1,0 +1,66 @@
+<nav class="menu">
+  <span #marker class="marker" aria-hidden="true"></span>
+
+  @for (item of items(); track item.value ?? item.label; let i = $index) {
+    @let kids = item.children;
+    @let isOpen = !!kids && open().has(i);
+    @let leafValue = item.value ?? item.label;
+    @let leafActive = !kids && leafValue === active();
+
+    <div class="section" [attr.data-open]="isOpen ? '' : null">
+      <button
+        #head
+        type="button"
+        class="head"
+        [attr.aria-expanded]="kids ? isOpen : null"
+        [attr.aria-current]="leafActive ? 'page' : null"
+        [attr.data-active]="leafActive ? '' : null"
+        (click)="kids ? toggle(i) : select(leafValue)"
+      >
+        {{ item.label }}
+      </button>
+
+      @if (kids) {
+        <!-- grid-template-rows 0fr -> 1fr: anima a altura ao abrir/fechar -->
+        <div class="fold">
+          <div class="fold-inner">
+            <div class="body" [style.height.px]="bodyHeight(kids)">
+              <svg class="branches" [attr.width]="indent()" [attr.height]="bodyHeight(kids)" aria-hidden="true">
+                <path class="line" [attr.d]="trunkPath(kids.length)" />
+                @for (kid of kids; track kid.value; let k = $index) {
+                  <path class="line" [attr.d]="branchPath(k)" />
+                }
+                @for (kid of kids; track kid.value; let k = $index) {
+                  <path
+                    class="reach"
+                    [attr.d]="reachPath(k)"
+                    [style.stroke-dasharray]="reachLength(k)"
+                    [style.stroke-dashoffset]="kid.value === active() ? 0 : reachLength(k)"
+                  />
+                }
+              </svg>
+
+              @for (kid of kids; track kid.value) {
+                <button
+                  type="button"
+                  class="child"
+                  [attr.aria-current]="kid.value === active() ? 'page' : null"
+                  [attr.data-active]="kid.value === active() ? '' : null"
+                  [disabled]="kid.disabled"
+                  [title]="kid.hint ?? ''"
+                  [tabIndex]="isOpen ? 0 : -1"
+                  (click)="select(kid.value)"
+                >
+                  @if (kid.icon) {
+                    <span class="icon" aria-hidden="true">{{ kid.icon }}</span>
+                  }
+                  <span class="label">{{ kid.label }}</span>
+                </button>
+              }
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</nav>
